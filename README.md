@@ -7,7 +7,6 @@ Build from Source for Linux
 Shoudn't install COLMAP from ```apt-get```
 
 Recommended dependencies: CUDA (at least version 7.X)
-
 Dependencies from the default Ubuntu repositories:
 ```
 sudo apt-get install \
@@ -31,10 +30,12 @@ sudo apt-get install \
     libcgal-dev
 ```
 
+
 Under Ubuntu 16.04/18.04 the CMake configuration scripts of CGAL are broken and you must also install the CGAL Qt5 package:
 ```
 sudo apt-get install libcgal-qt5-dev
 ```
+
 
 Install Ceres Solver:
 ```
@@ -49,6 +50,7 @@ make -j 1 #int vary on CPU cores
 sudo make install
 ```
 
+
 Configure and compile COLMAP:
 ```
 git clone https://github.com/colmap/colmap.git
@@ -60,6 +62,7 @@ cmake ..
 make -j 1 #int vary on CPU cores, beware ran out of memory
 sudo make install
 ```
+
 
 Under newer Ubuntu versions it might be necessary to explicitly select the used GCC version due to compatiblity issues with CUDA, which can be done as:
 ```
