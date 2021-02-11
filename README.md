@@ -1,93 +1,83 @@
 COLMAP
 ======
 
-About
+Build from Source for Linux
 -----
 
-COLMAP is a general-purpose Structure-from-Motion (SfM) and Multi-View Stereo
-(MVS) pipeline with a graphical and command-line interface. It offers a wide
-range of features for reconstruction of ordered and unordered image collections.
-The software is licensed under the new BSD license. If you use this project for
-your research, please cite:
+Shoudn't install COLMAP from ```apt-get```
 
-    @inproceedings{schoenberger2016sfm,
-        author={Sch\"{o}nberger, Johannes Lutz and Frahm, Jan-Michael},
-        title={Structure-from-Motion Revisited},
-        booktitle={Conference on Computer Vision and Pattern Recognition (CVPR)},
-        year={2016},
-    }
+Recommended dependencies: CUDA (at least version 7.X)
 
-    @inproceedings{schoenberger2016mvs,
-        author={Sch\"{o}nberger, Johannes Lutz and Zheng, Enliang and Pollefeys, Marc and Frahm, Jan-Michael},
-        title={Pixelwise View Selection for Unstructured Multi-View Stereo},
-        booktitle={European Conference on Computer Vision (ECCV)},
-        year={2016},
-    }
+Dependencies from the default Ubuntu repositories:
+```
+sudo apt-get install \
+    git \
+    cmake \
+    build-essential \
+    libboost-program-options-dev \
+    libboost-filesystem-dev \
+    libboost-graph-dev \
+    libboost-regex-dev \
+    libboost-system-dev \
+    libboost-test-dev \
+    libeigen3-dev \
+    libsuitesparse-dev \
+    libfreeimage-dev \
+    libgoogle-glog-dev \
+    libgflags-dev \
+    libglew-dev \
+    qtbase5-dev \
+    libqt5opengl5-dev \
+    libcgal-dev
+```
 
-If you use the image retrieval / vocabulary tree engine, please also cite:
+Under Ubuntu 16.04/18.04 the CMake configuration scripts of CGAL are broken and you must also install the CGAL Qt5 package:
+```
+sudo apt-get install libcgal-qt5-dev
+```
 
-    @inproceedings{schoenberger2016vote,
-        author={Sch\"{o}nberger, Johannes Lutz and Price, True and Sattler, Torsten and Frahm, Jan-Michael and Pollefeys, Marc},
-        title={A Vote-and-Verify Strategy for Fast Spatial Verification in Image Retrieval},
-        booktitle={Asian Conference on Computer Vision (ACCV)},
-        year={2016},
-    }
+Install Ceres Solver:
+```
+sudo apt-get install libatlas-base-dev libsuitesparse-dev
+git clone https://ceres-solver.googlesource.com/ceres-solver
+cd ceres-solver
+git checkout $(git describe --tags) # Checkout the latest release
+mkdir build
+cd build
+cmake .. -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF
+make -j 1 #int vary on CPU cores
+sudo make install
+```
 
-The latest source code is available at https://github.com/colmap/colmap. COLMAP
-builds on top of existing works and when using specific algorithms within
-COLMAP, please also cite the original authors, as specified in the source code.
+Configure and compile COLMAP:
+```
+git clone https://github.com/colmap/colmap.git
+cd colmap
+git checkout dev
+mkdir build
+cd build
+cmake ..
+make -j 1 #int vary on CPU cores, beware ran out of memory
+sudo make install
+```
+
+Under newer Ubuntu versions it might be necessary to explicitly select the used GCC version due to compatiblity issues with CUDA, which can be done as:
+```
+CC=/usr/bin/gcc-6 CXX=/usr/bin/g++-6 cmake ..
+```
 
 
-Download
---------
-
-Executables for Windows and Mac and other resources can be downloaded from
-https://demuc.de/colmap/. Executables for Linux/Unix/BSD are available at
-https://repology.org/metapackage/colmap/versions. To build COLMAP from source,
-please see https://colmap.github.io/install.html.
-
-Getting Started
----------------
-
-1. Download the pre-built binaries from https://demuc.de/colmap/ or build the
-   library manually as described in the documentation.
-2. Download one of the provided datasets at https://demuc.de/colmap/datasets/
-   or use your own images.
-3. Use the **automatic reconstruction** to easily build models
-   with a single click or command.
-4. Watch the short introductory video at
-   https://www.youtube.com/watch?v=P-EC0DzeVEU or read the tutorial
-   in the documentation at https://colmap.github.io/ for more details.
+Run COLMAP:
+```
+colmap -h
+colmap gui
+```
 
 
 Documentation
 -------------
 
 The documentation is available at https://colmap.github.io/.
-
-
-Support
--------
-
-Please, use the COLMAP Google Group at
-https://groups.google.com/forum/#!forum/colmap (colmap@googlegroups.com) for
-questions and the GitHub issue tracker at https://github.com/colmap/colmap for
-bug reports, feature requests/additions, etc.
-
-
-Acknowledgments
----------------
-
-The library was written by Johannes L. Schönberger (https://demuc.de/). Funding
-was provided by his PhD advisors Jan-Michael Frahm (http://frahm.web.unc.edu/)
-and Marc Pollefeys (https://people.inf.ethz.ch/pomarc/).
-
-
-Contribution
-------------
-
-Contributions (bug reports, bug fixes, improvements, etc.) are very welcome and
-should be submitted in the form of new issues and/or pull requests on GitHub.
 
 
 License
