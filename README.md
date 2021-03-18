@@ -57,8 +57,7 @@ git clone https://github.com/colmap/colmap.git
 cd colmap
 git checkout dev
 mkdir build
-cd build
-cmake ..
+cmake .
 make -j 1 #int vary on CPU cores, beware ran out of memory
 sudo make install
 ```
